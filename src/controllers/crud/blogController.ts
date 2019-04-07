@@ -1,10 +1,10 @@
-// import { CrudController } from './crudControllers'
-// import { blogServices } from '../services/index'
+import { CrudController } from '../crudController'
+import { blogService } from '../../services/index'
 
 
-// export class BlogController extends CrudController<typeof blogServices>{
-//     constructor(){
-//         super(blogServices);
-//     }
+export class BlogController extends CrudController<typeof blogService>{
+    constructor(){
+        super(blogService);
+    }
     
-// }
+}

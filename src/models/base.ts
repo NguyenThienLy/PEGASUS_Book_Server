@@ -1,10 +1,8 @@
-import * as mongoose from 'mongoose'
+import * as Sequelize from 'sequelize'
 
-export type BaseModel = mongoose.Document & {
-    createAt: Date,
+export type BaseModel = {
     status: "active" | "deactive",
-    updateAt: Date
+    createdAtt: Date,
+    updatedAt: Date
 }
-
-export type Model = mongoose.Model<BaseModel>;
-export type DocumentQuery = mongoose.DocumentQuery<any, any>
+export type Model = Sequelize.Model

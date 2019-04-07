@@ -1,22 +1,19 @@
-import * as express from 'express';
-import * as _ from 'lodash';
+import * as express from 'express'
+import * as _ from 'lodash'
 import { utilService } from '../services/index';
 import { ICrudExecOption, ICrudOption, errorService } from '../services'
 import { config } from '../config'
-import { CompanyModel, CustomerModel, BookingModel } from '../models'
+import {  } from '../models'
 
 export interface Request extends express.Request {
     queryInfo?:ICrudOption
-    customerInfo?:CustomerModel
-    companyInfo?: CompanyModel
-    bookingInfo?:BookingModel
+
     isEcho?: boolean
     isMessage?: boolean
     isPostback?: boolean
     innowayUserInfo?: any
     [x: string]: any
     firebaseUserInfo: any
-    authInfo: CompanyModel
 }
 export interface Response extends express.Response {
     [x: string]: any

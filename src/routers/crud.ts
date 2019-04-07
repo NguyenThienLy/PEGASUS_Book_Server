@@ -29,12 +29,13 @@ export class CrudRouter<T extends CrudController<any>> extends BaseRouter {
         return [firebaseAuthInfoMiddleware.run(), queryInfoMiddleware.run()]
     }
     async getList(req: Request, res: Response) {
+        console.log("query info: ", req.queryInfo)
         const result = await this.controller.getList(req.queryInfo)
         this.onSuccessAsList(res, result, undefined, req.queryInfo)
     }
     getItemMiddlewares(): any[] {
         return [
-            firebaseAuthInfoMiddleware.run(),
+            // firebaseAuthInfoMiddleware.run(),
             queryInfoMiddleware.run()
         ]
     }

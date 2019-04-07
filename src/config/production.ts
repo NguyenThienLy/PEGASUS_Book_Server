@@ -27,6 +27,9 @@ export default {
     googleStorage: {
         apikey: "AIzaSyDVOfHO52INv2vAVjK1r2hll0hxq-cbVW8"
 
+    },
+    postgres: {
+        uri: process.env.POSTGRES_LOCAL_URI
     }
 
 }

@@ -1,26 +1,19 @@
 
 import { CrudController } from './crudController';
 
-import { CompanyController } from './crud/companyController'
-import { CustomerController } from './crud/customerController'
-import { TicketController } from './crud/ticketController'
-import { PromotionController} from './crud/promotionController'
-import { TransportController } from './crud/transportController'
-import { BookingController } from './crud/bookingController'
+import { UserController }  from './crud/userController'
+import { BlogController } from './crud/blogController'
+import { PostController } from './crud/postController'
 
-const companyController = new CompanyController()
-const customerController = new CustomerController()
-const ticketController = new TicketController()
-const promotionController = new PromotionController()
-const transportController = new TransportController()
-const bookingController = new BookingController()
+
+const userController = new UserController()
+const blogController = new BlogController()
+const postController = new PostController()
 
 export {
     CrudController,
-    companyController,
-    customerController,
-    ticketController,
-    promotionController,
-    transportController,
-    bookingController
+    
+    userController,
+    blogController,
+    postController
 }

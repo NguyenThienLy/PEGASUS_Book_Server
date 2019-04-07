@@ -23,6 +23,10 @@ export default {
     },
     googleMap: {
         apikey: "AIzaSyARP_QXHk082dbAfMXphHhLGn15S_wdxQ4"
+    },
+    postgres: {
+        uri: process.env.POSTGRES_LOCAL_URI
     }
+
 
 }

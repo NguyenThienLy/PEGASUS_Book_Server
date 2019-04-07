@@ -1,12 +1,19 @@
-import { Model, BaseModel, DocumentQuery } from '../models'
+import { BaseModel, sequelize, Model } from '../models'
+import * as Sequelize from 'sequelize'
 
 export interface ICrudOption {
     filter?: any
     limit?: number
     offset?: number
-    fields?: string[]
-    populates?: any
-    lean?: boolean
+    scope?: string[] | string
+    order?: any[]
+    attributes?: any
+    include?: any[]
+    distinct?: boolean
+    paranoid?: boolean
+    transaction?: any
+
+    [key: string]: any
 }
 export interface ICrudExecOption {
     allowNull?: boolean
@@ -17,7 +24,7 @@ export class CrudService<T extends Model> {
     }
     model: T
 
-    async exec(promise: Promise<any> | any, option: ICrudExecOption = { allowNull: true }) {
+    async exec(promise: Promise<any> | any, option?: ICrudExecOption) {
         try {
             let result;
             if (promise.hasOwnProperty("exec")) {
@@ -25,11 +32,12 @@ export class CrudService<T extends Model> {
             } else {
                 result = await promise;
             }
-            if ((result === undefined || result === null) && !option.allowNull)
+            if ((result === undefined || result === null))
                 console.log("record not found")
-                //throw errorService.database.recordNotFound()
+            //throw errorService.database.recordNotFound()
             return result;
         } catch (err) {
+            console.log("Error: ", err)
             throw err;
             // if (err instanceof BaseError) throw err
             // if (config.server.debug) {
@@ -48,53 +56,51 @@ export class CrudService<T extends Model> {
         limit: 50,
         offset: 0
     }) {
-        let query = this.model.find();
-        option.limit = Number(option.limit)
-        //option.filter = JSON.parse(option.filter)
-        query = this.applyQueryOptions(query, option)
-        query.setOptions({
-            toJson: { virtual: true }
-        })
-        const rows = await this.exec(query)
-        const count = await query.count()
-        return { count, rows }
+        const queryScript = this.applyQueryOptions(option)
+        let query = this.model.findAndCount(queryScript);
+        return await this.exec(query)
     }
     async getItem(option?: ICrudOption) {
-        let query = this.model.findOne()
-        query = this.applyQueryOptions(query, option)
-        return await this.exec(query, { allowNull: false })
+       
+        const queryScript = this.applyQueryOptions(option)
+        let query = this.model.findOne(queryScript)
+        return await this.exec(query)
     }
     async create(params: any, option?: ICrudOption) {
         const query = this.model.create(params)
         return await this.exec(query)
     }
     async update(params: any, option?: ICrudOption) {
-        const query = this.model.findOneAndUpdate(option.filter, params, { new: true })
+        // const query = this.model.findOneAndUpdate(option.filter, params, { new: true })
+        const query = this.model.update(params, { where: option.filter })
         return await this.exec(query)
     }
     async delete(option?: ICrudOption) {
         let query = this.model.findOne()
-        query = this.applyQueryOptions(query, option)
-        const item = await this.exec(query, { allowNull: false })
-        return this.exec(item.remove())
+        query = this.applyQueryOptions(option)
+        const item = await this.exec(query)
+        return this.exec(item.destroy())
     }
     async deleteAll(option?: ICrudOption) {
-        let query = this.model.remove(option.filter)
-        query = this.applyQueryOptions(query, option)
+        let query = this.model.destroy(option.filter)
+        query = this.applyQueryOptions(option)
         return await this.exec(query)
     }
+    async rawQuery(query: string, option?: any) {
+        return await sequelize.query(sequelize, option, {})
+    }
 
-    applyQueryOptions(query: DocumentQuery, option: ICrudOption) {
-        if (option.filter) query.where(option.filter)
-        if (option.limit) query.limit(option.limit)
-        if (option.offset) query.skip(option.offset)
-        if (option.fields) query.select(option.fields)
-        if (option.populates) {
-            for (const populate of option.populates) {
-                query.populate(populate)
-            }
+    applyQueryOptions(option: ICrudOption) {
+        
+        const query: Sequelize.FindOptions<Model> = {
+            where: option.filter,
+            limit: option.limit,
+            offset: option.offset,
+            order: option.order,
+            attributes: option.attributes,
+            include: option.include,
+            paranoid: option.paranoid,
         }
-        if (option.lean) query.lean()
         return query
     }
 }

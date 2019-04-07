@@ -1,23 +1,13 @@
-import { Blog, BlogModel } from './blogs';
-import { Post, PostModel } from './posts';
-import { User, UserModel } from './users';
-import { Model, BaseModel, DocumentQuery} from './base'
-import { Company, CompanyModel } from  './company'
-import { Customer, CustomerModel } from './customer'
-import { Ticket, TicketModel } from './ticket'
-import { Promotion, PromotionModel } from './promotion'
-import { Booking, BookingModel } from './booking'
-import { Transport, TransportModel } from './transport'
-export {
+import { App } from './app'
+import { User } from './user'
 
-    Model, BaseModel, DocumentQuery,
-    Blog, BlogModel,
-    Post, PostModel,
-    User, UserModel,
-    Company, CompanyModel,
-    Customer, CustomerModel,
-    Ticket, TicketModel,
-    Promotion, PromotionModel,
-    Booking, BookingModel,
-    Transport, TransportModel
-}
+App.associate(User)
+
+
+export * from './db'
+export * from './base'
+export * from './app'
+export * from './user'
+export * from './userDetail'
+export * from './blog'
+export * from './post'
