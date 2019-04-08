@@ -1,14 +1,13 @@
-import * as dotenv from 'dotenv'
-dotenv.config({ silent: true })
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv = require("dotenv");
+dotenv.config({ silent: true });
+exports.default = {
     database: {
-        user: process.env.DEV_DB_USER,
-        pass: process.env.DEV_DB_PASS,
-        name: process.env.DEV_DB_NAME,
-        host: process.env.DEV_DB_HOST,
-        port: process.env.DEV_DB_PORT,
-        defaultPageSize: 50,
-        ssl: process.env.DEV_DB_SSL
+        mongo: process.env.MONGOLAB_URI,
+        //mongo: process.env.MONGOLOCAL_URI,
+        defaultPageSize: 50
     },
     firebase: {
         type: "service_account",
@@ -28,9 +27,11 @@ export default {
     googleMap: {
         apikey: "AIzaSyARP_QXHk082dbAfMXphHhLGn15S_wdxQ4"
     },
+    googleStorage: {
+        apikey: "AIzaSyDVOfHO52INv2vAVjK1r2hll0hxq-cbVW8"
+    },
     postgres: {
         uri: process.env.POSTGRES_LOCAL_URI
     }
-
-
-}
+};
+//# sourceMappingURL=production.js.map

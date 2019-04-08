@@ -2,9 +2,13 @@ import * as dotenv from 'dotenv'
 dotenv.config({ silent: true })
 export default {
     database: {
-        mongo: process.env.MONGOLAB_URI,
-        //mongo: process.env.MONGOLOCAL_URI,
-        defaultPageSize: 50
+        user: process.env.PROD_DB_USER,
+        pass: process.env.PROD_DB_PASS,
+        name: process.env.PROD_DB_NAME,
+        host: process.env.PROD_DB_HOST,
+        port: process.env.PROD_DB_PORT,
+        defaultPageSize: 50,
+        ssl: process.env.PROD_DB_SSL
     },
     firebase: {
         type: "service_account",
@@ -26,10 +30,9 @@ export default {
     },
     googleStorage: {
         apikey: "AIzaSyDVOfHO52INv2vAVjK1r2hll0hxq-cbVW8"
-
     },
     postgres: {
-        uri: process.env.POSTGRES_LOCAL_URI
+        uri: process.env.POSTGRES_PRODUCTION_URI
     }
 
 }
