@@ -15,8 +15,14 @@ const PostSchema = sequelize.define("tbl_post",
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
         title: { type: Sequelize.STRING },
+        shortDescription: { type: Sequelize.STRING },
+        description: { type: Sequelize.TEXT },
         body: { type: Sequelize.STRING },
         thumb: { type: Sequelize.STRING },
+        images: { type: Sequelize.ARRAY(Sequelize.TEXT) },
+        metaTitle: { type: Sequelize.TEXT },
+        metaDescription: { type: Sequelize.TEXT },
+        viewCount: { type: Sequelize.INTEGER },
         blogId: { type: Sequelize.UUID, references: { model: 'tbl_blog', key: '_id' } }
     },
     {
@@ -28,16 +34,14 @@ const PostSchema = sequelize.define("tbl_post",
     }
 )
 //sequelize.sync()
-PostSchema.associate = (Blog) => {
-    PostSchema.belongsTo(Blog, {
+PostSchema.associate = (models: any[]) => {
+    PostSchema.belongsTo(models['Blog'], {
         foreignKey: 'blogId',
-        as: 'user'
+        as: 'blog'
     });
-    Blog.hasMany(PostSchema, {
+    models['Blog'].hasMany(PostSchema, {
         foreignKey: 'blogId',
         as: 'posts'
     });
 };
-PostSchema.associate(Blog)
-
 export const Post = PostSchema

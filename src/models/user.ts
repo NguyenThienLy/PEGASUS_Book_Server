@@ -38,9 +38,6 @@ const UserSchema = sequelize.define("tbl_user",
         },
         firebaseUserInfo: {
             type: Sequelize.JSONB
-        },
-        role: {
-            type: Sequelize.ENUM('admin','editor','salesman','read')
         }
     },
     {
@@ -64,4 +61,8 @@ const UserSchema = sequelize.define("tbl_user",
         }
     }
 )
+
+UserSchema.associate = (models: any[]) => {
+  
+};
 export const User = UserSchema

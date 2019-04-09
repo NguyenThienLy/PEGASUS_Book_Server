@@ -87,12 +87,12 @@ export class CrudService<T extends Model> {
         return await this.exec(query)
     }
     async rawQuery(query: string, option?: any) {
-        return await sequelize.query(sequelize, option, {})
+        return await sequelize.query(query, option)
     }
 
     applyQueryOptions(option: ICrudOption) {
         
-        const query: Sequelize.FindOptions<Model> = {
+        const query = {
             where: option.filter,
             limit: option.limit,
             offset: option.offset,

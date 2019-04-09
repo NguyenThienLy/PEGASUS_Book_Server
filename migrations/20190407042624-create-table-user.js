@@ -28,9 +28,6 @@ module.exports = {
       firebaseUserInfo: {
         type: Sequelize.JSONB
       },
-      role: {
-        type: Sequelize.ENUM('admin','editor','salesman','read')
-      },
       createdAt: {
         type: 'TIMESTAMP',
         allowNull: false

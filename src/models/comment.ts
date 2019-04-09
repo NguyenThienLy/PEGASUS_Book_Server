@@ -40,6 +40,8 @@ const CommentSchema = sequelize.define("tbl_comment",
         }
     }
 )
+CommentSchema.associate = (models: any[]) => {
 
+}
 
 export const  Comment = CommentSchema

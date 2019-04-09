@@ -8,6 +8,9 @@
   "scripts": {
     "start": "babel-node ./build/app.js",
     "watch-babel": "babel-watch ./build/app.js",
+    "watch-babel:test": "NODE_ENV=test babel-watch ./build/app.js",
+    "watch-babel:dev": "NODE_ENV=development babel-watch ./build/app.js",
+    "watch-babel:pro": "NODE_ENV=production babel-watch ./build/app.js",
     "server": "tsc && nodemon ./build/app.js",
     "watch-ts": "tsc -w",
     "build-babel": "./node_modules/.bin/babel build --out-dir dist"

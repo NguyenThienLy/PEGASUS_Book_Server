@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize'
 
 import { sequelize } from './db'
-import { BaseModel, User, Blog, BlogModel, App, FaqCategory } from './index'
+import { BaseModel, User, Blog, BlogModel, App } from './index'
 
-export type ContactModel = BaseModel & {
+export type FaqCategoryModel = BaseModel & {
     title: string
     body: string
     thumb: string
@@ -11,13 +11,11 @@ export type ContactModel = BaseModel & {
     blog: BlogModel
 }
 
-const ContactSchema = sequelize.define("tbl_contact",
+const FaqCategorySchema = sequelize.define("tbl_faq_category",
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        fullName: { type: Sequelize.STRING, alowNull: false },
-        phone: { type: Sequelize.STRING },
-        email: { type: Sequelize.STRING, validate: { isEmail: true, notEmpty: false } },
-        body: { type: Sequelize.TEXT },
+        name: { type: Sequelize.STRING },
+        description: { type: Sequelize.TEXT },
         appId: { type: Sequelize.UUID, references: { model: 'tbl_app', key: '_id' }, alowNull: false }
     },
     {
@@ -29,14 +27,14 @@ const ContactSchema = sequelize.define("tbl_contact",
     }
 )
 
-ContactSchema.associate = (models: any[]) => {
-    ContactSchema.belongsTo(models['App'], {
+FaqCategorySchema.associate = (models: any[]) => {
+    FaqCategorySchema.belongsTo(models['App'], {
         foreignKey: 'appId',
         as: 'app'
     });
-    models['App'].hasMany(ContactSchema, {
+    models['App'].hasMany(FaqCategorySchema, {
         foreignKey: 'appId',
-        as: 'contacts'
+        as: 'faqCategories'
     });
 };
-export const Contact = ContactSchema
+export const FaqCategory = FaqCategorySchema

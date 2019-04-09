@@ -55,4 +55,8 @@ const UserDetailSchema = sequelize.define("UserDetail",
 
 
 
+UserDetailSchema.associate = (models: any[]) => {
+  
+};
+
 export const  UserDetail = UserDetailSchema
