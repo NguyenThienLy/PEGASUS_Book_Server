@@ -67,7 +67,7 @@ class CrudService {
         return await this.exec(query);
     }
     async rawQuery(query, option) {
-        return await models_1.sequelize.query(models_1.sequelize, option, {});
+        return await models_1.sequelize.query(query, option);
     }
     applyQueryOptions(option) {
         const query = {

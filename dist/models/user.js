@@ -18,9 +18,6 @@ const UserSchema = db_1.sequelize.define("tbl_user", {
             notEmpty: true
         }
     },
-    displayName: {
-        type: Sequelize.TEXT
-    },
     password: {
         type: Sequelize.TEXT
     },
@@ -30,9 +27,13 @@ const UserSchema = db_1.sequelize.define("tbl_user", {
     firebaseUserInfo: {
         type: Sequelize.JSONB
     },
-    role: {
-        type: Sequelize.ENUM('admin', 'editor', 'salesman', 'read')
-    }
+    username: { type: Sequelize.STRING },
+    firstName: { type: Sequelize.STRING },
+    lastName: { type: Sequelize.STRING },
+    description: { type: Sequelize.TEXT },
+    quote: { type: Sequelize.STRING },
+    job: { type: Sequelize.STRING },
+    score: { type: Sequelize.INTEGER, defaultValue: 0 }
 }, {
     timestamps: true,
     freezeTableName: true,
@@ -52,5 +53,6 @@ const UserSchema = db_1.sequelize.define("tbl_user", {
         }
     }
 });
+UserSchema.associate = models => {};
 exports.User = UserSchema;
 //# sourceMappingURL=user.js.map

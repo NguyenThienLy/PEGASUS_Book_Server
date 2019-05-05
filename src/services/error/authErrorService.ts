@@ -14,6 +14,9 @@ export class AuthErrorService {
     constructor(){
         
     }
+    tokenExpired(){
+        return new AuthException('token_expired',"Token hết hạn",401)
+    }
     unauthonized(){
         return new AuthException('unauthornized',"unauthornized",401)
     }

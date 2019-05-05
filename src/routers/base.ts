@@ -36,10 +36,10 @@ export class BaseRouter {
     onError(res: Response, error: any) {
         if (!error.options) {
             console.log("UNKNOW ERROR", error)
-            res.status(400).json(error.message)
-        } else {
             const err = errorService.router.somethingWentWrong()
             res.status(err.options.code).json(err.options)
+        } else {
+            res.status(400).json(error.options)
         }
     }
 

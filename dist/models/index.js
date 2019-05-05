@@ -4,13 +4,18 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("./app");
-const user_1 = require("./user");
-app_1.App.associate(user_1.User);
+const _ = require("lodash");
+const fs = require("fs");
+const fileNames = fs.readdirSync(__dirname);
+const models = {};
+fileNames.forEach(fileName => {
+    if (fileName.endsWith('.model.js')) {
+        const model = require(`./${fileName}`);
+        _.merge(models, model);
+    }
+});
+_.forEach(models, (value, key) => {
+    value.associate(models);
+});
 __export(require("./db"));
-__export(require("./app"));
-__export(require("./user"));
-__export(require("./userDetail"));
-__export(require("./blog"));
-__export(require("./post"));
 //# sourceMappingURL=index.js.map

@@ -17,4 +17,7 @@ export class DatabaseErrorService {
     query(){
         return new DatabaseException('query',"Database query error",401)
     }
+    recordNotFound(){
+        return new DatabaseException('record_not_found',"Record not found",401)
+    }
 }

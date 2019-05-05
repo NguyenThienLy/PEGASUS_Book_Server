@@ -2,7 +2,7 @@ import * as express from  'express';
 import * as _ from 'lodash';
 import { BaseRouter, Request, Response } from './base';
 import { CrudController } from '../controllers/index'
-import { firebaseAuthInfoMiddleware, queryInfoMiddleware } from '../middlewares'
+import { firebaseAuthInfoMiddleware, queryInfoMiddleware, authInfoMiddleware } from '../middlewares'
 
 export class CrudRouter<T extends CrudController<any>> extends BaseRouter {
     router: express.Router;
@@ -23,19 +23,16 @@ export class CrudRouter<T extends CrudController<any>> extends BaseRouter {
         this.router.delete('/', this.deleteAllMiddlewares(),this.route(this.deleteAll));
     }
     customRouter() {
-        this.router.get('/me')
     }
     getListMiddlewares(): any[] {
-        return [firebaseAuthInfoMiddleware.run(), queryInfoMiddleware.run()]
+        return [ queryInfoMiddleware.run()]
     }
     async getList(req: Request, res: Response) {
-        console.log("query info: ", req.queryInfo)
         const result = await this.controller.getList(req.queryInfo)
         this.onSuccessAsList(res, result, undefined, req.queryInfo)
     }
     getItemMiddlewares(): any[] {
         return [
-            // firebaseAuthInfoMiddleware.run(),
             queryInfoMiddleware.run()
         ]
     }
@@ -46,7 +43,7 @@ export class CrudRouter<T extends CrudController<any>> extends BaseRouter {
         this.onSuccess(res, result)
     }
     createMiddlewares(): any[] {
-        return [ firebaseAuthInfoMiddleware.run()]
+        return [ ]
     }
     async create(req: Request, res: Response) {
         const result = await this.controller.create(req.body)

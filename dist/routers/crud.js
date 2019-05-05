@@ -21,11 +21,9 @@ class CrudRouter extends base_1.BaseRouter {
         this.router.delete('/:_id', this.deleteMiddlewares(), this.route(this.delete));
         this.router.delete('/', this.deleteAllMiddlewares(), this.route(this.deleteAll));
     }
-    customRouter() {
-        this.router.get('/me');
-    }
+    customRouter() {}
     getListMiddlewares() {
-        return [middlewares_1.firebaseAuthInfoMiddleware.run(), middlewares_1.queryInfoMiddleware.run()];
+        return [middlewares_1.queryInfoMiddleware.run()];
     }
     async getList(req, res) {
         console.log("query info: ", req.queryInfo);
@@ -44,7 +42,7 @@ class CrudRouter extends base_1.BaseRouter {
         this.onSuccess(res, result);
     }
     createMiddlewares() {
-        return [middlewares_1.firebaseAuthInfoMiddleware.run()];
+        return [];
     }
     async create(req, res) {
         const result = await this.controller.create(req.body);

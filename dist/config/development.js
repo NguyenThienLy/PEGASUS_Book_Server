@@ -5,9 +5,13 @@ const dotenv = require("dotenv");
 dotenv.config({ silent: true });
 exports.default = {
     database: {
-        //mongo: process.env.MONGOLOCAL_URI,
-        mongo: process.env.MONGOLOCAL_URI,
-        defaultPageSize: 50
+        user: process.env.DEV_DB_USER,
+        pass: process.env.DEV_DB_PASS,
+        name: process.env.DEV_DB_NAME,
+        host: process.env.DEV_DB_HOST,
+        port: process.env.DEV_DB_PORT,
+        defaultPageSize: 50,
+        ssl: process.env.DEV_DB_SSL
     },
     firebase: {
         type: "service_account",

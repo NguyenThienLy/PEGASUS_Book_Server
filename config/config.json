@@ -1,29 +1,23 @@
 {
   "development": {
-    "username": "ewbhcbwadrplzm",
-    "password": "7a6c917c3bbd84d9d22684c58cf60e6295b82244d653f08212dbc847c1b74b8d",
-    "database": "dflrg1mr0btp8h",
-    "host": "ec2-184-72-238-22.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": {
-        "require": true
-      }
-    }
+    "username": "postgres",
+    "password": null,
+    "database": "book",
+    "host": "localhost",
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": null,
-    "database": "thanhnghi",
+    "database": "book",
     "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "password",
-    "database": "thanhnghi",
-    "host": "db",
+    "password": null,
+    "database": "book",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }

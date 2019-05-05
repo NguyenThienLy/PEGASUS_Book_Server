@@ -3,6 +3,7 @@ import * as moment from 'moment'
 import { config } from '../config'
 import { errorService } from './index';
 
+
 export class TokenService{
     async generateToken(payload: any = {}, secret: string){
         return jwt.encode(payload, secret)
@@ -14,12 +15,10 @@ export class TokenService{
             throw errorService.auth.badToken()
         }
     }
-    async getCustomerToken(secret){
-        secret = secret + config.token.secret
-        return jwt.encode({role:"customer"}, secret)
-    }
-    async getCompanyToken(secret){
-        secret = secret + config.token.secret
-        return jwt.encode({role:"company"}, secret)
+    async getUserAuthToken(userId){
+        const secret = config.token.secret
+        return jwt.encode({ userId, exp: moment().add(1,"days").format() },  
+            secret
+        )
     }
 }

@@ -17,29 +17,7 @@ class Server {
         this.initView();
         this.start();
     }
-    initDB() {
-        // const database = new Sequelize('entrepreneu', 'postgres', 'password', {
-        //     host: 'localhost',
-        //     dialect: 'postgres',
-        //     operatorsAliases: false,
-        //     pool: {
-        //       max: 5,
-        //       min: 0,
-        //       acquire: 30000,
-        //       idle: 10000
-        //     },
-        //   });
-        // Or you can simply use a connection uri
-        //const sequelize = new Sequelize('postgres://postgres@localhost:5432/entrepreneu');
-        // sequelize
-        //     .authenticate()
-        //     .then(() => {
-        //         console.log('Connection has been established successfully.');
-        //     })
-        //     .catch(err => {
-        //         console.error('Unable to connect to the database:', err);
-        //     });
-    }
+    initDB() {}
     initExpressMiddleware() {
         app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
         app.use(bodyParser.urlencoded({ extended: false }));

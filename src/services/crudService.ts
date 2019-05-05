@@ -1,5 +1,6 @@
 import { BaseModel, sequelize, Model } from '../models'
 import * as Sequelize from 'sequelize'
+import { errorService } from '.';
 
 export interface ICrudOption {
     filter?: any
@@ -32,23 +33,12 @@ export class CrudService<T extends Model> {
             } else {
                 result = await promise;
             }
-            if ((result === undefined || result === null))
-                console.log("record not found")
-            //throw errorService.database.recordNotFound()
+            if ((result === undefined || result === null)){
+                throw errorService.database.recordNotFound()
+            }
             return result;
         } catch (err) {
-            console.log("Error: ", err)
             throw err;
-            // if (err instanceof BaseError) throw err
-            // if (config.server.debug) {
-            //     if (err.errors && err.errors[0]) {
-            //         throw errorService.database.queryFail(err.errors[0].message)
-            //     } else {
-            //       throw errorService.database.queryFail(err.message)
-            //     }
-            // } else {
-            //     throw err
-            // }
         }
     }
     async getList(option: ICrudOption = {
@@ -64,7 +54,7 @@ export class CrudService<T extends Model> {
        
         const queryScript = this.applyQueryOptions(option)
         let query = this.model.findOne(queryScript)
-        return await this.exec(query)
+        return await this.exec(query, { allowNull: false })
     }
     async create(params: any, option?: ICrudOption) {
         const query = this.model.create(params)
@@ -72,14 +62,19 @@ export class CrudService<T extends Model> {
     }
     async update(params: any, option?: ICrudOption) {
         // const query = this.model.findOneAndUpdate(option.filter, params, { new: true })
+        const queryScript = this.applyQueryOptions(option)
         const query = this.model.update(params, { where: option.filter })
-        return await this.exec(query)
+        await this.exec(query)
+        return this.exec(this.model.findOne(queryScript))
     }
     async delete(option?: ICrudOption) {
-        let query = this.model.findOne()
-        query = this.applyQueryOptions(option)
-        const item = await this.exec(query)
-        return this.exec(item.destroy())
+        const queryScript = this.applyQueryOptions(option)
+        let query = this.model.findOne(queryScript)
+        let item = await this.exec(query)
+        await this.exec(item.destroy(query, {
+            returning: true
+        }))
+        return item
     }
     async deleteAll(option?: ICrudOption) {
         let query = this.model.destroy(option.filter)

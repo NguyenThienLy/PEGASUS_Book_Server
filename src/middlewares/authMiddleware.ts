@@ -2,17 +2,21 @@ import * as express from 'express'
 import { Request, Response } from '../routers/base'
 import { firebaseService, errorService, tokenService } from '../services'
 import { BaseMiddleware } from './baseMiddleware'
+import { config } from '../config';
+import * as moment from 'moment'
 
 export class AuthInfoMiddleware extends BaseMiddleware {
 
     async use(req: Request, res: Response, next: express.NextFunction, providers: string[]){
         try{
-            req.authInfo = {
-                companyId: req.headers["company_id"],
-                companyToken: req.headers["company_token"]
+            const token = req.headers["x-token"]
+            const { userId, exp } = await tokenService.decode(token, config.token.secret)
+            if(moment(exp).isBefore(moment().format())){
+                throw errorService.auth.tokenExpired()
             }
-            req.firebaseUserInfo = await firebaseService.verifyIdToken(req.headers["access_token"] as string)  
-           // req.authInfo.company = await tokenService.decode()
+            req.authInfo = {
+                uid: userId
+            }
             next()
         } catch(err){
             throw errorService.auth.unauthonized()
