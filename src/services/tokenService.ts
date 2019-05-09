@@ -15,10 +15,29 @@ export class TokenService{
             throw errorService.auth.badToken()
         }
     }
-    async getUserAuthToken(userId){
+    async getUserShortLifeToken(userId: string,role: "reviewer" | "admin", scores: string[] = ["default"]){
         const secret = config.token.secret
-        return jwt.encode({ userId, exp: moment().add(1,"days").format() },  
+        return `S|${jwt.encode({ userId, role,exp: moment().add(1,"days").format() },  
+            secret
+        )}`
+    }
+    async getUserLongLifeToken(userId: string,role: "reviewer" | "admin", scores: string[] = ["default"]){
+        const secret = config.token.secret
+        return `L|${jwt.encode({ userId, scores, role },  
+            secret
+        )}`
+    }
+    async getUserAuthToken(userId: string,role: "reviewer" | "admin", scores: string[] = ["default"]){
+        const secret = config.token.secret
+        return jwt.encode({ userId, exp: moment().add(1,"days").format(), scores, role },  
             secret
         )
+    }
+    async getUserRefreshToken(userId: string,role: "reviewer" | "admin", scores: string[] = ["default"]){
+        const secret = config.token.refreshToken
+
+        return `R|${jwt.encode({ userId, scores, role },  
+            secret
+        )}`
     }
 }

@@ -23,7 +23,7 @@ const UserSchema = sequelize.define('tbl_user',
         score: { type: Sequelize.INTEGER, defaultValue: 0 },
         avatar: { type: Sequelize.STRING },
         cover: { type: Sequelize.STRING },
-        
+        role: { type: Sequelize.STRING, defaultValue: "guest" }
     },
     {
         timestamps: true,
