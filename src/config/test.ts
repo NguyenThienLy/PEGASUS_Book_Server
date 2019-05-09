@@ -23,7 +23,8 @@ export default {
         client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-lnxiz%40divivu-a3eca.iam.gserviceaccount.com"
     },
     token: {
-        secret: process.env.TOKEN_SECRET
+        secret: process.env.TOKEN_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN
     },
     googleMap: {
         apikey: "AIzaSyARP_QXHk082dbAfMXphHhLGn15S_wdxQ4"

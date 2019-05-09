@@ -18,7 +18,7 @@ const PostSchema = sequelize.define('tbl_post',
         images: { type:  Sequelize.ARRAY(Sequelize.TEXT) },
         userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false },
         bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' }, alowNull: false},
-
+        status: { type: Sequelize.STRING, defaultValue: "publish" }
     },
     {
         timestamps: true,

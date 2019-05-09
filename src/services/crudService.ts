@@ -22,8 +22,10 @@ export interface ICrudExecOption {
 export class CrudService<T extends Model> {
     constructor(model: T) {
         this.model = model
+        this.Op = Sequelize.Op
     }
     model: T
+    Op: any
 
     async exec(promise: Promise<any> | any, option?: ICrudExecOption) {
         try {
