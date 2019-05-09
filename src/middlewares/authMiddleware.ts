@@ -1,9 +1,9 @@
-import * as express from 'express'
-import { Request, Response } from '../routers/base'
-import { firebaseService, errorService, tokenService } from '../services'
-import { BaseMiddleware } from './baseMiddleware'
-import { config } from '../config';
-import * as moment from 'moment'
+import * as express from "express";
+import { Request, Response } from "../routers/base";
+import { errorService, tokenService } from "../services";
+import { BaseMiddleware } from "./baseMiddleware";
+import { config } from "../config";
+import * as moment from "moment";
 
 export interface AuthPayloadInterface {
     userId: string
@@ -37,7 +37,7 @@ export class AuthInfoMiddleware extends BaseMiddleware {
             //const { userId, exp, scores } = await tokenService.decode(token, config.token.secret)
             if (authPayload.exp && moment(authPayload.exp).isBefore(moment().format())) {
                 throw errorService.auth.tokenExpired()
-            }   
+            }
             await this.verifyPermission(authPayload.role, providers)
             req.authInfo = authPayload
             next()
@@ -53,4 +53,5 @@ export class AuthInfoMiddleware extends BaseMiddleware {
     async verifyScores(scores: string[]) {
 
     }
+
 }
