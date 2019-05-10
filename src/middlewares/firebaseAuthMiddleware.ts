@@ -1,6 +1,6 @@
 import * as express from "express";
 import { Request, Response } from "../routers/base";
-import { errorService } from "../services";
+import { errorService, firebaseService } from "../services";
 import { BaseMiddleware } from "./baseMiddleware";
 
 export class FirebaseAuthInfoMiddleware extends BaseMiddleware {
@@ -11,7 +11,7 @@ export class FirebaseAuthInfoMiddleware extends BaseMiddleware {
     providers: string[]
   ) {
     try {
-      // req.firebaseUserInfo = await firebaseService.verifyIdToken(req.headers["access_token"] as string)
+      req.firebaseUserInfo = await firebaseService.verifyIdToken(req.headers["access_token"] as string)
       next();
     } catch (err) {
       throw errorService.auth.unauthonized();

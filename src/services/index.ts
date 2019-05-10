@@ -1,13 +1,13 @@
 import { CrudService, ICrudExecOption, ICrudOption } from "./crudService";
 import { UtilService } from "./utilService";
-//import { FirebaseService } from './firebaseService'
+import { FirebaseService } from './firebaseService'
 import { ErrorService } from "./errorService";
 import { TokenService } from "./tokenService";
 import { GoogleMapService } from "./googleMapService";
 //import { FirebaseStorageService } from './firebaseStorageService'
 
 const utilService = new UtilService();
-//const firebaseService = new FirebaseService()
+const firebaseService = new FirebaseService()
 const errorService = new ErrorService();
 const tokenService = new TokenService();
 const googleMapService = new GoogleMapService();
@@ -18,7 +18,7 @@ export {
   ICrudExecOption,
   ICrudOption,
   utilService,
-  // firebaseService,
+  firebaseService,
   errorService,
   tokenService,
   googleMapService
