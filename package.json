@@ -14,7 +14,7 @@
     "server": "tsc && nodemon ./build/app.js",
     "watch-ts": "tsc -w",
     "build-babel": "./node_modules/.bin/babel build --out-dir dist",
-    "g":"node devHelper/templates/index"
+    "g": "node devHelper/templates/index"
   },
   "dependencies": {
     "ajv": "^5.3.0",

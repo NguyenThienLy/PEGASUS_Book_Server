@@ -8,12 +8,17 @@ export class UserController extends CrudController<typeof userService>{
     constructor(){
         super(userService);
     }
-    async login(params: {
-        email: string
-        password: string
-    }){
-        const { email, password } = params
-        const user = await this.service.getItem({ filter: { email, password }})
+    async login(firebaseUserInfo: any){
+        let user: any
+        try {
+            user = await this.service.getItem({ filter: { firebaseUid: firebaseUserInfo.uid }})
+        } catch(err) {
+            user = await this.service.create({
+                firebaseUid: firebaseUserInfo.uid,
+                firebaseUserInfo: firebaseUserInfo,
+                email: firebaseUserInfo.email
+            })
+        }
         const token = await tokenService.getUserShortLifeToken(user._id, user.role)
         const refreshToken = await tokenService.getUserRefreshToken(user._id, user.role, ["default"])
         let result = user.toJSON()
