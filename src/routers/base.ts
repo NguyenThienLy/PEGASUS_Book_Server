@@ -34,6 +34,7 @@ export interface IValidateSchemaProperties {
 export class BaseRouter {
 
     onError(res: Response, error: any) {
+        console.log("error: ",error)
         if (!error.options) {
             console.log("UNKNOW ERROR", error)
             const err = errorService.router.somethingWentWrong()

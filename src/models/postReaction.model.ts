@@ -9,8 +9,9 @@ export type PostReactionModel = BaseModel & {
 const PostReactionSchema = sequelize.define('tbl_post_reaction',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
-        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }},
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
+        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
+        postAuthorId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
     },
     {
         timestamps: true,
@@ -37,6 +38,14 @@ PostReactionSchema.associate = (models: any) => {
     models['Post'].hasMany(PostReactionSchema, {
         foreignKey: 'postId',
         as: 'postReactions'
+    });
+    PostReactionSchema.belongsTo(models['User'], {
+        foreignKey: 'postAuthorId',
+        as: 'postAuthor'
+    });
+    models['User'].hasMany(PostReactionSchema, {
+        foreignKey: 'postAuthorId',
+        as: 'reactions'
     });
     
 };
