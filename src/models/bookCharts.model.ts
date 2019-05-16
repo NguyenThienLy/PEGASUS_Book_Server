@@ -2,17 +2,17 @@ import * as Sequelize from 'sequelize'
 import { sequelize } from './db'
 import { BaseModel } from './index'
 
-export type AdminModel = BaseModel & {
-
+export type BookChartsModel = BaseModel & {
+    
 }
 
-const AdminSchema = sequelize.define('tbl_admin',
+const BookChartsSchema = sequelize.define('tbl_book_charts',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        firebaseUserUid: { type: Sequelize.STRING, allowNull: false },
-        firstName: { type: Sequelize.STRING },
-        lastName: { type: Sequelize.STRING },
-        role: { type: Sequelize.STRING, defaultValue: "reporter" }
+        bookCategoryId: { type: Sequelize.UUID, references: { model: 'tbl_book_category', key: '_id' }},
+        type: { type: Sequelize.STRING, defaultValue: "week" },
+        time: { type: Sequelize.DATE },
+        
     },
     {
         timestamps: true,
@@ -23,10 +23,10 @@ const AdminSchema = sequelize.define('tbl_admin',
     }
 )
 
-AdminSchema.associate = (models: any) => {
-
-
+BookChartsSchema.associate = (models: any) => {
+    
+    
 };
 
 
-export const Admin = AdminSchema
+export const BookCharts = BookChartsSchema

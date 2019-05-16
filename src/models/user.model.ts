@@ -21,6 +21,7 @@ const UserSchema = sequelize.define('tbl_user',
         quote: { type: Sequelize.STRING },
         job: { type: Sequelize.STRING },
         score: { type: Sequelize.INTEGER, defaultValue: 0 },
+        influenceScore: { type: Sequelize.INTEGER, defaultValue: 1, validate: { max: 10, min: 1 } },
         avatar: { type: Sequelize.STRING },
         cover: { type: Sequelize.STRING },
         role: { type: Sequelize.STRING, defaultValue: "guest" }
