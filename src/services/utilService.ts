@@ -3,6 +3,7 @@ import * as crypto from 'crypto'
 import * as Ajv from 'ajv'
 import * as AjvError from 'ajv-errors'
 import * as AjvKeyWords from 'ajv-keywords'
+import * as moment from 'moment'
 
 export class UtilService {
     validateJSON(schema: any, json: any = {}) {
@@ -35,5 +36,8 @@ export class UtilService {
             message = message.replace(regex, '')
         }
         return message
+    }
+    async getQuarter(time: Date){
+        return Number(moment(time).format("M"))%3
     }
 }
