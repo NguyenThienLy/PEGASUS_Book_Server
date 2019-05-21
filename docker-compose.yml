@@ -1,0 +1,34 @@
+version: "2"
+services:
+  thanhnghi_docker: 
+    image: thanh-nghi-server
+    ports: 
+      - 4000:4000
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; node ./dist/app'
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_LOCAL_URI=postgres://postgres:password@db:5432/book
+      - DATABASE=book
+      - USERNAME=postgres
+      - PASSWORD=123456
+
+
+      - DB_USER=postgres
+      - DB_PASS=123456
+      - DB_NAME=book
+      - DB_HOST=localhost
+
+      - PROD_DB_USER=postgres
+      - PROD_DB_PASS=123456
+      - PROD_DB_NAME=book
+      - PROD_DB_HOST=localhost
+      - PORT=4000   
+  db:
+    image: postgres
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=book
