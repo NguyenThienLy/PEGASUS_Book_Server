@@ -10,6 +10,8 @@ const BookCategorySchema = sequelize.define('tbl_book_category',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
         name: { type: Sequelize.TEXT },
+        slug: { type: Sequelize.TEXT, unique: true },
+        description: { type: Sequelize.TEXT },
         color: { type: Sequelize.STRING }
     },
     {

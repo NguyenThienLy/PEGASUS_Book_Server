@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize'
 import { BaseModel } from './index'
-import { sequelize} from './db'
+import { sequelize } from './db'
 
 export type BookModel = BaseModel & {
-    
+
 }
 
 const BookSchema = sequelize.define('tbl_book',
@@ -12,11 +12,12 @@ const BookSchema = sequelize.define('tbl_book',
         title: { type: Sequelize.TEXT, alowNull: false },
         rate: { type: Sequelize.INTEGER, defaultValue: 0 },
         thumb: { type: Sequelize.STRING },
-        images: { type:  Sequelize.ARRAY(Sequelize.TEXT) },
+        images: { type: Sequelize.ARRAY(Sequelize.TEXT) },
         status: { type: Sequelize.STRING, allowNull: false, defaultValue: "pending" },
         authorId: { type: Sequelize.UUID, references: { model: 'tbl_book_author', key: '_id' }, allowNull: false },
-        publishedId: { type: Sequelize.UUID, references: { model: 'tbl_publisher', key: '_id' }},
-        categoryId: { type: Sequelize.UUID, references: { model: 'tbl_book_category', key: '_id' }} 
+        publishedId: { type: Sequelize.UUID, references: { model: 'tbl_publisher', key: '_id' } },
+        categoryId: { type: Sequelize.UUID, references: { model: 'tbl_book_category', key: '_id' } },
+        categoryIds: { type: Sequelize.ARRAY({ type: Sequelize.UUID, references: { model: 'tbl_book_category', key: '_id' } }), defaultValue: [] },
     },
     {
         timestamps: true,
@@ -52,7 +53,7 @@ BookSchema.associate = (models: any) => {
         foreignKey: 'categoryId',
         as: 'books'
     });
-    
+
 };
 
 export const Book = BookSchema

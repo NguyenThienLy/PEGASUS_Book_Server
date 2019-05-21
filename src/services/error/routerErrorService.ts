@@ -20,4 +20,7 @@ export class RouterErrorService {
     googleMapApiWrong(error){
         return new RouterException('google_map_api',error)
     }
+    requestDataInvalid(message: string) {
+        return new RouterException('data_invalid', message, 403)
+    }
 }

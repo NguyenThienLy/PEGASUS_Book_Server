@@ -10,6 +10,11 @@ export default class BookCategoryRouter extends CrudRouter<typeof bookCategoryCo
     }
     customRouter(){
         this.router.get("/:_id/posts", [ queryInfoMiddleware.run()], this.route(this.getPosts))
+        this.router.get("/populars", [ queryInfoMiddleware.run()], this.route(this.getPopulars))
+    }
+    async getPopulars(req: Request, res: Response){
+        const result = await this.controller.getPopulars(req.queryInfo)
+        this.onSuccessAsList(res, result)
     }
     async getPosts(req: Request, res: Response){
         const result = await this.controller.getPosts(req.params._id, req.queryInfo)

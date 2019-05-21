@@ -16,8 +16,11 @@ const PostSchema = sequelize.define('tbl_post',
         content: { type: Sequelize.TEXT },
         thumb: { type: Sequelize.STRING },
         images: { type:  Sequelize.ARRAY(Sequelize.TEXT) },
+        view: { type: Sequelize.INTEGER, defaultValue: 0, allowNull: false },
+        reaction: { type: Sequelize.INTEGER, defaultValue: 0, allowNull: false },
         userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false },
         bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' }, alowNull: false},
+        
         status: { type: Sequelize.STRING, defaultValue: "publish" }
     },
     {

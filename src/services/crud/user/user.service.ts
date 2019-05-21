@@ -6,9 +6,9 @@ export class UserService extends CrudService<typeof User> {
     constructor(){
         super(User);
     }
-    async increaseScore(userId: string){
+    async increaseScore(userId: string, transaction){
         
-        return await this.exec(this.model.update({ score: Sequelize.literal(`score + 1`)}, { where: { _id: userId }}))
+        return await this.exec(this.model.update({ score: Sequelize.literal(`score + 1`)}, { where: { _id: userId }}, transaction))
     }
     async decreaseScore(userId: string, transaction?: any){
         return await this.exec(this.model.update({ score: Sequelize.literal(`score - 1`)}, { where: { _id: userId }}, transaction))

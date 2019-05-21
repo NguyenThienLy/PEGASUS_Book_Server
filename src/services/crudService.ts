@@ -1,5 +1,6 @@
 import { BaseModel, sequelize, Model } from '../models'
 import * as Sequelize from 'sequelize'
+import * as dottie from 'dottie'
 import { errorService } from '.';
 
 export interface ICrudOption {
@@ -49,6 +50,7 @@ export class CrudService<T extends Model> {
         offset: 0
     }) {
         const queryScript = this.applyQueryOptions(option)
+        console.log("qưue: ", queryScript)
         let query = this.model.findAndCount(queryScript);
         return await this.exec(query)
     }

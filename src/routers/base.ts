@@ -81,7 +81,7 @@ export class BaseRouter {
     async validateJSON(body: any, schema: IValidateSchema) {
         const validate = await utilService.validateJSON(schema, body)
         if (!validate.isValid) {
-            console.log("Body isValid");
+            throw errorService.router.requestDataInvalid(validate.message)
         }
     }
     route(func: (req: Request, rep: Response) => Promise<any>) {
