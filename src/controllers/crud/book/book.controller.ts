@@ -13,11 +13,11 @@ export class BookController extends CrudController<typeof bookService>{
         query: string
     }) {
         const { query } = params
-        return ElasticSearchService.getInstance().search("book", "books", {
+        return ElasticSearchService.getInstance().search("book", {
             query: {
                 match: {
                     title: query,
-                    
+
                 },
                 // regexp: {
                 //     title: query
@@ -27,23 +27,31 @@ export class BookController extends CrudController<typeof bookService>{
     }
     async create(params: any, option?: ICrudOption) {
         const book = await this.service.create(params, option)
-        const result = await ElasticSearchService.getInstance().create("book", book.toJSON())
-        return book
+        try {
+            const result = await ElasticSearchService.getInstance().create("book", book.toJSON())
+            return book
+        } catch (err) {
+            this.service.delete({ filter: { _id: book._id } })
+            throw err
+        }
     }
-    
+
+
     async update(params: any, option?: ICrudOption) {
         await this.validateJSON(params, BookSchema.UpdateBookSchema)
         const book = await this.service.model.findOne({ where: option.filter })
-        if(book.status === "pending"){
+        if (book.status === "pending") {
             delete params.status
+            await ElasticSearchService.getInstance().update("book", book._id, book.toJSON())
             return await this.service.update(params, option)
-        } else if(book.status === "update_available"){
+        } else if (book.status === "update_available") {
             delete params.status
+            await ElasticSearchService.getInstance().update("book", book._id, book.toJSON())
             return await this.service.update(params, option)
         } else {
             throw BookErrorService.bookBlocked()
         }
-        
+
     }
 
 }

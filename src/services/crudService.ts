@@ -50,7 +50,6 @@ export class CrudService<T extends Model> {
         offset: 0
     }) {
         const queryScript = this.applyQueryOptions(option)
-        console.log("qưue: ", queryScript)
         let query = this.model.findAndCount(queryScript);
         return await this.exec(query)
     }

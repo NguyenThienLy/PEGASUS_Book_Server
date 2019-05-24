@@ -34,6 +34,10 @@ export default {
     },
     postgres: {
         uri: process.env.POSTGRES_PRODUCTION_URI
+    },
+    elastic: {
+        uri: process.env.ELASTIC_DEV
     }
+
 
 }

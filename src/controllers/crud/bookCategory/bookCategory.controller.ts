@@ -40,7 +40,13 @@ export class BookCategoryController extends CrudController<typeof bookCategorySe
     async getPosts(categoryId: string, queryInfo: ICrudOption) {
         const books = await bookService.model.findAll({ where: { categoryId }, attributes: ["_id", "title"] })
         const bookIds = books.map((book: any) => { return book._id })
-        const posts = await postService.getList(_.merge(queryInfo, { where: { bookId: { $in: bookIds } } }))
+        const posts = await postService.getList(_.merge(queryInfo, { filter: { bookId: { $in: bookIds } } }))
+        // const posts = await postService.model.findAll({
+        //     where: { bookId: { $in: bookIds }},
+        //     include: [{
+        //         association: "user"
+        //     }]
+        // })
         posts.rows = posts.rows.map((post: any) => {
             post = post.toJSON()
             const bookIndex = books.findIndex((book) => { return book._id === post.bookId })
