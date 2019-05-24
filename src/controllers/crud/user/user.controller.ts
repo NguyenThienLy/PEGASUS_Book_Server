@@ -1,7 +1,9 @@
 import { CrudController } from '../../crudController'
 import { userService, userErrorService } from '../../../services/crud/user'
-import { tokenService } from '../../../services';
+import { tokenService, ICrudOption } from '../../../services';
 import { userFollowService } from '../../../services/crud/userFollow';
+import { ElasticSearchService } from '../../../services/elasticSearchService';
+import { sequelize } from '../../../models';
 
 
 export class UserController extends CrudController<typeof userService>{
@@ -9,6 +11,7 @@ export class UserController extends CrudController<typeof userService>{
         super(userService);
     }
     async login(firebaseUserInfo: any){
+        console.log("firebaseUserInfo: ", firebaseUserInfo)
         let user: any
         try {
             user = await this.service.getItem({ filter: { firebaseUid: firebaseUserInfo.uid }})
@@ -16,7 +19,15 @@ export class UserController extends CrudController<typeof userService>{
             user = await this.service.create({
                 firebaseUid: firebaseUserInfo.uid,
                 firebaseUserInfo: firebaseUserInfo,
-                email: firebaseUserInfo.email
+                email: firebaseUserInfo.email || "",
+                firstName: firebaseUserInfo.displayName || "Người dùng",
+                lastName: ""
+            })
+            await ElasticSearchService.getInstance().create("user", {
+                _id: user._id,
+                email: user.email,
+                name: user.firstName + user.lastName,
+                score: 0
             })
         }
         const token = await tokenService.getUserShortLifeToken(user._id, user.role)
@@ -45,5 +56,19 @@ export class UserController extends CrudController<typeof userService>{
         return await userFollowService.delete({ filter: { _id: params.userFollowId, [this.service.Op.or]: [{fromId: params.uid}, { toId: params.uid }] }})
     }
     
-    
+    async update(params: any, option?: ICrudOption) {
+        let transaction = await sequelize.transaction()
+        try {
+            option.transaction = transaction
+            let user = await this.service.update(params, option)
+            user = user.toJSON()
+            user.name = user.firstName + user.lastName
+            await ElasticSearchService.getInstance().update("user", option.filter._id, user)
+            await transaction.commit()
+            return user
+        } catch (err) {
+            await transaction.rollback()
+            throw err
+        }
+    }
 }
