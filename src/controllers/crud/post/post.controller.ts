@@ -22,6 +22,7 @@ export class PostController extends CrudController<typeof postService>{
                 title: post.title,
                 description: post.description,
                 author: user.firstName + " " + user.lastName,
+                slug: post.slug, 
                 thumb: post.thumb,
                 reaction: 0,
                 comment: 0

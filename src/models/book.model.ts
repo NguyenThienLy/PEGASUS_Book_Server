@@ -10,6 +10,8 @@ const BookSchema = sequelize.define('tbl_book',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
         title: { type: Sequelize.TEXT, alowNull: false },
+        description: { type: Sequelize.TEXT },
+        slug: { type: Sequelize.TEXT, allowNull: false },
         rate: { type: Sequelize.INTEGER, defaultValue: 0 },
         thumb: { type: Sequelize.STRING },
         images: { type: Sequelize.ARRAY(Sequelize.TEXT) },

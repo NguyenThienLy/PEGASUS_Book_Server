@@ -71,7 +71,6 @@ export class ElasticSearchService {
         //return await this.client.update({ index, id, type: "_doc", body })
     }
     public async search(index: string, body: any, size: number, from: number) {
-        console.log("body: ", body)
         const result = await this.client.search({ index, body, size, from })
         return result.hits
     }
