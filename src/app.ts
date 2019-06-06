@@ -9,6 +9,7 @@ import * as expressValidator from 'express-validator'
 import router from './routers/index';
 import { config } from './config';
 import { sequelize } from './models/db'
+import * as compression from 'compression'
 
 const app = express();
 
@@ -30,6 +31,7 @@ class Server {
         app.use(bodyParser.json());
         app.use(expressValidator())
         app.use(cors())
+        app.use(compression())
     }
     initRoute() {
         app.get('/', (req, res) => {
