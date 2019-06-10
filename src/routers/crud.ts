@@ -16,13 +16,22 @@ export class CrudRouter<T extends CrudController<any>> extends BaseRouter {
     }
     defaultRouter() {
         this.router.get('/', this.getListMiddlewares(),this.route(this.getList));
+        this.router.get('/find', this.findOneMiddlewares(), this.route(this.findOne))
         this.router.get('/:_id' ,this.getItemMiddlewares(),this.route(this.getItem));
         this.router.post('/',this.createMiddlewares(), this.route(this.create));
         this.router.put('/:_id',this.updateMiddlewares(), this.route(this.update));
         this.router.delete('/:_id', this.deleteMiddlewares(),this.route(this.delete));
         this.router.delete('/', this.deleteAllMiddlewares(),this.route(this.deleteAll));
+        
     }
     customRouter() {
+    }
+    findOneMiddlewares(): any[] {
+        return [ queryInfoMiddleware.run() ]
+    }
+    async findOne(req: Request, res: Response){
+        const result = await this.controller.getItem(req.queryInfo)
+        this.onSuccess(res, result)
     }
     getListMiddlewares(): any[] {
         return [ queryInfoMiddleware.run()]
