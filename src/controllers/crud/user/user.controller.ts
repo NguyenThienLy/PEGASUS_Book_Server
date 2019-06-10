@@ -11,7 +11,6 @@ export class UserController extends CrudController<typeof userService>{
         super(userService);
     }
     async login(firebaseUserInfo: any){
-        console.log("firebaseUserInfo: ", firebaseUserInfo)
         let user: any
         try {
             user = await this.service.getItem({ filter: { firebaseUid: firebaseUserInfo.uid }})
@@ -20,13 +19,16 @@ export class UserController extends CrudController<typeof userService>{
                 firebaseUid: firebaseUserInfo.uid,
                 firebaseUserInfo: firebaseUserInfo,
                 email: firebaseUserInfo.email || "",
-                firstName: firebaseUserInfo.displayName || "Người dùng",
-                lastName: ""
+                firstName: firebaseUserInfo.displayName || firebaseUserInfo.name || "Người dùng",
+                lastName: "",
+                username: firebaseUserInfo.email,
+                avatar: firebaseUserInfo.picture || "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png"
             })
             await ElasticSearchService.getInstance().create("user", {
                 _id: user._id,
                 email: user.email,
                 name: user.firstName + user.lastName,
+                avatar: user.avatar,
                 score: 0
             })
         }
@@ -71,4 +73,5 @@ export class UserController extends CrudController<typeof userService>{
             throw err
         }
     }
+    
 }
