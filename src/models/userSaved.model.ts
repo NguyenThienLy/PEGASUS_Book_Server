@@ -3,13 +3,14 @@ import { sequelize } from './db'
 import { BaseModel } from './index'
 
 export type UserSavedModel = BaseModel & {
-    
+
 }
 
 const UserSavedSchema = sequelize.define('tbl_user_saved',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
+        itemId: { type: Sequelize.UUID },
         type: { type: Sequelize.STRING, defaultValue: "post" },
         
     },
@@ -31,7 +32,7 @@ UserSavedSchema.associate = (models: any) => {
         foreignKey: 'userId',
         as: 'saveds'
     });
-    
+
 };
 
 
