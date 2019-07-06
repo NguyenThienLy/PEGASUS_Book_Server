@@ -11,9 +11,9 @@ export type NotificationModel = BaseModel & {
 const NotificationSchema = sequelize.define('tbl_notification',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
-        type: { type: Sequelize.STRING },
-        payload: { type: Sequelize.JSONB }
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false  },
+        type: { type: Sequelize.STRING, allowNull: false  },
+        payload: { type: Sequelize.JSONB, allowNull: false  }
     },
     {
         timestamps: true,

@@ -9,9 +9,9 @@ export type UserSavedModel = BaseModel & {
 const UserSavedSchema = sequelize.define('tbl_user_saved',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
-        itemId: { type: Sequelize.UUID },
-        type: { type: Sequelize.STRING, defaultValue: "post" },
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
+        itemId: { type: Sequelize.UUID, allowNull: false },
+        type: { type: Sequelize.STRING, defaultValue: "post", allowNull: false },
         collectionId: { type: Sequelize.UUID, references: { model: 'tbl_user_save_collection', key: '_id' } }
     },
     {

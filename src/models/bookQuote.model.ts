@@ -9,7 +9,7 @@ export type BookQuoteModel = BaseModel & {
 const BookQuoteSchema = sequelize.define('tbl_book_quote',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' } },
+        bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' }, allowNull: false  },
         quote: { type: Sequelize.TEXT, defaultValue: "" },
         image: { type: Sequelize.STRING }
     },

@@ -9,8 +9,8 @@ export type UserFollowModel = BaseModel & {
 const UserFollowSchema = sequelize.define('tbl_user_follow',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        fromId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
-        toId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
+        fromId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
+        toId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
         isAccept: { type: Sequelize.BOOLEAN, defaultValue: false }
     },
     {
