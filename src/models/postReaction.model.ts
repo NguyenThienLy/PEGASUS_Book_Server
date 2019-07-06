@@ -9,9 +9,9 @@ export type PostReactionModel = BaseModel & {
 const PostReactionSchema = sequelize.define('tbl_post_reaction',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
-        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
-        postAuthorId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false, unique: "post_reaction_unique" },
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false, unique: "post_reaction_unique" },
+        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }, allowNull: false, unique: "post_reaction_unique" },
+        postAuthorId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false, unique: "post_reaction_unique" },
     },
     {
         timestamps: true,

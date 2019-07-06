@@ -9,8 +9,8 @@ export type UserSaveCollectionModel = BaseModel & {
 const UserSaveCollectionSchema = sequelize.define('tbl_user_save_collection',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
-        name: { type: Sequelize.STRING },
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false  },
+        name: { type: Sequelize.STRING, allowNull: false  },
         description: { type: Sequelize.TEXT }
     },
     {

@@ -9,7 +9,7 @@ export type PublisherModel = BaseModel & {
 const PublisherSchema = sequelize.define('tbl_publisher',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        brandName: { type: Sequelize.TEXT }
+        brandName: { type: Sequelize.TEXT, allowNull: false }
     },
     {
         timestamps: true,

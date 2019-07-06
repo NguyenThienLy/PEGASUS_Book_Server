@@ -9,9 +9,9 @@ export type ReportModel = BaseModel & {
 const ReportSchema = sequelize.define('tbl_report',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
-        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }},
-        reason: { type: Sequelize.TEXT },
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
+        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }, allowNull: false },
+        reason: { type: Sequelize.TEXT, allowNull: false  },
         isAccept: { type: Sequelize.BOOLEAN, defaultValue: false }
     },
     {

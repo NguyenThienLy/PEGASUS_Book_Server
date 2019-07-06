@@ -9,8 +9,8 @@ export type BookRateModel = BaseModel & {
 const BookRateSchema = sequelize.define('tbl_book_rate',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false},
-        bookId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false },
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false},
+        bookId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
         rate: { type: Sequelize.INTEGER,  alowNull: false ,validate: { max: 10, min: 1 } },
         influenceScore: { type: Sequelize.INTEGER, validate: { max: 10, min: 1 }, defaultValue: 1 }, 
         // isRead: { type: Sequelize.BOOLEAN, defaultValue: false },

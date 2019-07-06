@@ -3,13 +3,13 @@ import { sequelize } from './db'
 import { BaseModel } from './index'
 
 export type BookCategoryModel = BaseModel & {
-    
+
 }
 
 const BookCategorySchema = sequelize.define('tbl_book_category',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        name: { type: Sequelize.TEXT },
+        name: { type: Sequelize.TEXT, allowNull: false },
         slug: { type: Sequelize.TEXT, unique: true },
         description: { type: Sequelize.TEXT },
         color: { type: Sequelize.STRING }
@@ -25,7 +25,7 @@ const BookCategorySchema = sequelize.define('tbl_book_category',
 
 BookCategorySchema.associate = (models: any) => {
 
-    
+
 };
 
 

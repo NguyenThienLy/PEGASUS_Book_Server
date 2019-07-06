@@ -9,8 +9,8 @@ export type NotificationRegisterModel = BaseModel & {
 const NotificationRegisterSchema = sequelize.define('tbl_notification_register',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
-        subscription: { type: Sequelize.JSONB }
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false  },
+        subscription: { type: Sequelize.JSONB, allowNull: false  }
     },
     {
         timestamps: true,

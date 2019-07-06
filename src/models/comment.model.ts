@@ -9,10 +9,10 @@ export type CommentModel = BaseModel & {
 const CommentSchema = sequelize.define('tbl_comment',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }},
-        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }},
+        userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, allowNull: false },
+        postId: { type: Sequelize.UUID, references: { model: 'tbl_post', key: '_id' }, allowNull: false },
         parentId: { type: Sequelize.UUID, references: { model: 'tbl_comment', key: '_id' }},
-        content: { type: Sequelize.TEXT },
+        content: { type: Sequelize.TEXT, allowNull: false  },
         attachment: { type: Sequelize.STRING }
     },
     {
