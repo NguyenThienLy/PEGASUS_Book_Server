@@ -7,6 +7,7 @@ import { userService } from '../../../services/crud/user';
 
 import { sequelize } from '../../../models';
 import { postService } from '../../../services/crud/post';
+import { notificationSystemService } from "../../../services";
 
 
 export class PostReactionController extends CrudController<typeof postReactionService>{
@@ -20,6 +21,11 @@ export class PostReactionController extends CrudController<typeof postReactionSe
             await postService.increaseReactionCount(params.postId, transaction)
             const postReaction = await this.service.create(params, _.merge(option, { transaction }))
             await transaction.commit()
+            notificationSystemService.tracking({
+                type: "react_on_post",
+                toUserId: params.postAuthorId,
+                fromUserId: params.userId
+            }) 
             return postReaction
         } catch (err) {
             console.log("err: ", err)

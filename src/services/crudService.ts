@@ -14,7 +14,7 @@ export interface ICrudOption {
     distinct?: boolean
     paranoid?: boolean
     transaction?: any
-
+    group?:any[]
     [key: string]: any
 }
 export interface ICrudExecOption {
@@ -54,7 +54,6 @@ export class CrudService<T extends Model> {
         return await this.exec(query)
     }
     async getItem(option?: ICrudOption) {
-       
         const queryScript = this.applyQueryOptions(option)
         let query = this.model.findOne(queryScript)
         return await this.exec(query, { allowNull: false })
@@ -98,6 +97,7 @@ export class CrudService<T extends Model> {
             attributes: option.attributes,
             include: option.include,
             paranoid: option.paranoid,
+            group: option.group
         }
         return query
     }

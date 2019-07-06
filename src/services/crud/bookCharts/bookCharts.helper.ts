@@ -48,6 +48,21 @@ export class BookChartsHelper {
         this.exec("year", startYear, endYear)
     }
     async exec(type: string, start: string, end: string){
+        let minDenominator = 0
+        switch(type){
+            case "week":
+                minDenominator = CONST.BOOK_CHARTS.DEMINATOR.MIN_WEEK
+                break
+            case "month":
+                minDenominator = CONST.BOOK_CHARTS.DEMINATOR.MIN_MONTH
+                break
+            case "quarter":
+                minDenominator = CONST.BOOK_CHARTS.DEMINATOR.MIN_QUARTER
+                break
+            case "year":
+                minDenominator = CONST.BOOK_CHARTS.DEMINATOR.MIN_YEAR
+                break
+        }
         const bookCharts = await bookChartsService.model.findOrCreate({
             where: {
                 time: { $gte: start, $lte: end },
@@ -71,7 +86,7 @@ export class BookChartsHelper {
         }).then(bookRates => {
             for (let bookRate of bookRates) {
                 bookRate = bookRate.toJSON()
-                if (bookRate.totalDenominator > CONST.BOOK_CHARTS.DEMINATOR.MIN_YEAR) {
+                if (bookRate.totalDenominator > minDenominator) {
                     bookChartsItemService.model.findOrCreate({
                         where: {
                             bookChartsId: bookCharts[0]._id,

@@ -1,4 +1,5 @@
 import * as cron from 'node-cron'
+import { BookChartsHelper } from './crud/bookCharts/bookCharts.helper';
 
 export class CronJobService {
     constructor() {
@@ -15,6 +16,11 @@ export class CronJobService {
         cron.schedule('* * * * *', () => {
             console.log('running a task every minute');
         });
+    }
+    async updateBookCharts(){
+        cron.schedule('0 2 * * *', () => {
+            BookChartsHelper.getInstance().updateCharts()
+        })
     }
 }
 

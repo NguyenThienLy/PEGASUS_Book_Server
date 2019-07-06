@@ -9,7 +9,16 @@ export default class BookRateRouter extends CrudRouter<typeof bookRateController
         super(bookRateController);
     }
     customRouter(){
-
+        this.router.get('/topBookRate', [queryInfoMiddleware.run()], this.route(this.getTopBookRate))
+    }
+    async getTopBookRate(req: Request, res: Response){
+        const result = await this.controller.getTopBookRate({
+            startTime: req.query.startTime,
+            endTime: req.query.endTime,
+            limit: req.query.limit, 
+            offset: req.query.offset
+        }, req.queryInfo)
+        this.onSuccessAsList(res, result)
     }
 }
 
