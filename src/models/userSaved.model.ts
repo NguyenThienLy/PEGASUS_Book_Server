@@ -12,7 +12,7 @@ const UserSavedSchema = sequelize.define('tbl_user_saved',
         userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' } },
         itemId: { type: Sequelize.UUID },
         type: { type: Sequelize.STRING, defaultValue: "post" },
-        
+        collectionId: { type: Sequelize.UUID, references: { model: 'tbl_user_save_collection', key: '_id' } }
     },
     {
         timestamps: true,
@@ -32,7 +32,14 @@ UserSavedSchema.associate = (models: any) => {
         foreignKey: 'userId',
         as: 'saveds'
     });
-
+    UserSavedSchema.belongsTo(models['UserSaveCollection'], {
+        foreignKey: 'collectionId',
+        as: 'collection'
+    });
+    models['UserSaveCollection'].hasMany(UserSavedSchema, {
+        foreignKey: 'collectionId',
+        as: 'items'
+    });
 };
 
 
