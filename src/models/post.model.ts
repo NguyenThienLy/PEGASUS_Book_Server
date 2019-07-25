@@ -3,24 +3,24 @@ import { sequelize } from './db'
 import { BaseModel } from './index'
 
 export type PostModel = BaseModel & {
-    
+
 }
 
 const PostSchema = sequelize.define('tbl_post',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
         title: { type: Sequelize.TEXT, alowNull: false },
-        slug: { type: Sequelize.STRING, allowNull: false, unique: true  },
+        slug: { type: Sequelize.STRING, allowNull: false, unique: true },
         description: { type: Sequelize.STRING },
         postTemplate: { type: Sequelize.STRING },
-        content: { type: Sequelize.TEXT, allowNull: false  },
-        thumb: { type: Sequelize.STRING, allowNull: false  },
-        images: { type:  Sequelize.ARRAY(Sequelize.TEXT) },
+        content: { type: Sequelize.TEXT, allowNull: false },
+        thumb: { type: Sequelize.STRING, allowNull: false },
+        images: { type: Sequelize.ARRAY(Sequelize.TEXT) },
         view: { type: Sequelize.INTEGER, defaultValue: 0, allowNull: false },
         reaction: { type: Sequelize.INTEGER, defaultValue: 0, allowNull: false },
         userId: { type: Sequelize.UUID, references: { model: 'tbl_user', key: '_id' }, alowNull: false },
-        bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' }, alowNull: false},
-        
+        bookId: { type: Sequelize.UUID, references: { model: 'tbl_book', key: '_id' } },
+        requestCreateBookId: { type: Sequelize.UUID, references: { model: 'tbl_request_create_book', key: '_id' } },
         status: { type: Sequelize.STRING, defaultValue: "publish" }
     },
     {
@@ -49,7 +49,7 @@ PostSchema.associate = (models: any) => {
         foreignKey: 'bookId',
         as: 'posts'
     });
-    
+
 };
 
 
