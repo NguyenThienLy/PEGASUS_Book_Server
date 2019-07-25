@@ -53,23 +53,32 @@ export class CrudService<T extends Model> {
         let query = this.model.findAndCount(queryScript);
         return await this.exec(query)
     }
-    async getItem(option?: ICrudOption) {
+    async getItem(option: ICrudOption = {
+        filter: {}
+    }) {
         const queryScript = this.applyQueryOptions(option)
         let query = this.model.findOne(queryScript)
         return await this.exec(query, { allowNull: false })
     }
-    async create(params: any, option?: ICrudOption) {
-        const query = this.model.create(params)
+    async create(params: any, option: ICrudOption = {
+        filter: {}
+    }) {
+        const queryScript = this.applyQueryOptions(option)
+        const query = this.model.create(params, queryScript)
         return await this.exec(query)
     }
-    async update(params: any, option?: ICrudOption) {
+    async update(params: any, option: ICrudOption = {
+        filter: {}
+    }) {
         // const query = this.model.findOneAndUpdate(option.filter, params, { new: true })
         const queryScript = this.applyQueryOptions(option)
-        const query = this.model.update(params, { where: option.filter })
+        const query = this.model.update(params, queryScript)
         await this.exec(query)
         return this.exec(this.model.findOne(queryScript))
     }
-    async delete(option?: ICrudOption) {
+    async delete(option: ICrudOption = {
+        filter: {}
+    }) {
         const queryScript = this.applyQueryOptions(option)
         let query = this.model.findOne(queryScript)
         let item = await this.exec(query)
@@ -78,8 +87,11 @@ export class CrudService<T extends Model> {
         }))
         return item
     }
-    async deleteAll(option?: ICrudOption) {
-        let query = this.model.destroy(option.filter)
+    async deleteAll(option: ICrudOption = {
+        filter: {}
+    }) {
+        const queryScript = this.applyQueryOptions(option)
+        let query = this.model.destroy(queryScript)
         query = this.applyQueryOptions(option)
         return await this.exec(query)
     }
@@ -88,7 +100,7 @@ export class CrudService<T extends Model> {
     }
 
     applyQueryOptions(option: ICrudOption) {
-        
+        console.log("option: ", option)
         const query = {
             where: option.filter,
             limit: option.limit,
@@ -97,7 +109,8 @@ export class CrudService<T extends Model> {
             attributes: option.attributes,
             include: option.include,
             paranoid: option.paranoid,
-            group: option.group
+            group: option.group,
+            transaction: option.transaction
         }
         return query
     }

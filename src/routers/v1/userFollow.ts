@@ -15,7 +15,6 @@ export default class UserFollowRouter extends CrudRouter<typeof userFollowContro
         return [firebaseAuthInfoMiddleware.run(), authInfoMiddleware.run()]
     }
     async create(req: Request, res: Response) {
-        console.log("req authInfo: ", req.authInfo)
         req.body.fromId = req.authInfo.user._id
         const result = await this.controller.create(req.body)
         this.onSuccess(res, result)

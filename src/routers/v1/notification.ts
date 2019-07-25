@@ -11,12 +11,9 @@ export default class NotificationRouter extends CrudRouter<typeof notificationCo
     customRouter() {
         this.router.post('/subscribe', [firebaseAuthInfoMiddleware.run(), authInfoMiddleware.run()], this.route(this.subscribe))
         this.router.delete('/subscribe', [firebaseAuthInfoMiddleware.run(), authInfoMiddleware.run()], this.route(this.unsubscribe))
-        this.router.get('/test/:id', this.route(this.test))
+       
     }
-    async test(req: Request, res: Response){
-        this.controller.test(req.params.id)
-        this.onSuccess(res)
-    }
+    
     async subscribe(req: Request, res: Response) {
         const result = await this.controller.subscribe({
             user: req.authInfo.user,

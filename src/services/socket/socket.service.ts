@@ -23,7 +23,7 @@ export class SocketService {
     redisClient: redis.Client
 
     async listen(server: express.Application) {
-        this.io = socketio.listen(server, { origins: "https://bookfeeling.herokuapp.com/" })
+        this.io = socketio.listen(server, { origins: "http://localhost:3000" })
         this.io.on('connection', async (socket: socketio.Socket) => {
             socket.emit("connect_success", {
                 message: "Connect successfully"
@@ -34,7 +34,9 @@ export class SocketService {
                 })
             }
         })
+        
     }
+    // Gửi socket thông báo cho client
     async sendSocket(channel: string, payload: any) {
         switch (channel) {
             case "user_notification":
@@ -42,6 +44,7 @@ export class SocketService {
                 this.io.to(socketId).emit("user_notification", payload)
         }
     }
+    // Lấy dữ liệu đã được lưu trong redis
     async getRedisValue(userId){
         return new Promise( (resolve, reject) => {
             this.redisClient.get(userId, function(err, value){
