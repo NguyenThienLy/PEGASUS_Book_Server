@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <title>Login to divivu</title>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/vi.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="">
+            <button class="w3-button w3-green" onclick="login()">Login </button>
+            <button class="w3-button w3-blue" onclick="getIdToken()">Get ID token</button>
+            <button class="w3-button w3-teal" onclick="getTimeNow()">Get time now</button>
+        </div>
+    </div>
+    <br>
+    <div id="user-info">
+
+    </div>
+    <script>
+        function login() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.idToken;
+                alert("Firebase token:", token)
+                getIdToken()
+                const user = result.additionalUserInfo
+                var userInfo = `
+                    <h3> ${user.profile.name} </h3>
+                    <p> 
+                        ${user.profile.email} <br>
+                        <img class="w3-round" src="${user.profile.picture}"/>
+                    </p>
+                `
+                document.getElementById("user-info").innerHTML = userInfo;
+                // ...
+            }).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorMessage)
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+            });
+
+        }
+        function getIdToken() {
+            firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+                console.log("Firebase id token:", idToken)
+            }).catch(function (error) {
+                // Handle error
+            });
+        }
+        function getTimeNow() {
+            var time = moment().format()
+            alert(time)
+        }
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBqVAH4pjoHRkAKn-nSGvlBdri_zoa1bsk",
+            authDomain: "divivu-a3eca.firebaseapp.com",
+            databaseURL: "https://divivu-a3eca.firebaseio.com",
+            projectId: "divivu-a3eca",
+            storageBucket: "divivu-a3eca.appspot.com",
+            messagingSenderId: "752948822276"
+        };
+        firebase.initializeApp(config);
+    </script>
+</body>
+
+</html>

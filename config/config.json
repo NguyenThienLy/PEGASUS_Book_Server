@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "book",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": null,
+    "database": "book",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "rljhvpwjnwsgvx",
+    "password": "9e9ccfd34af45f3cf773e5f397ccb63a7314871c9220cb4a369731be8429ed36",
+    "database": "ddp96md1cau7r3",
+    "host": "ec2-54-235-167-210.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": {
+        "require": true
+      }
+    }
+  }
+}
