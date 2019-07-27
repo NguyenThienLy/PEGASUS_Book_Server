@@ -48,7 +48,7 @@ export class NotificationSystemService {
                     type: params.type,
                     payload: {
                         title: `${fromUser.firstName} ${fromUser.lastName} vừa bình luận bài viết của bạn`,
-                        content: ``,
+                        content: payload.content,
                         fromUserId: fromUserId
                     }
                 }
@@ -56,7 +56,7 @@ export class NotificationSystemService {
                     userId: toUserId,
                     fromUserId: fromUserId,
                     title: `${fromUser.firstName} ${fromUser.lastName} vừa bình luận bài viết của bạn`,
-                    message: ``,
+                    message: payload.content,
                     postId: payload.postId
                 }
                 break

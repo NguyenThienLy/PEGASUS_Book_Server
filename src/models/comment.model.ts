@@ -45,7 +45,7 @@ CommentSchema.associate = (models: any) => {
         foreignKey: 'parentId',
         as: 'parentComment'
     });
-    models['Post'].hasMany(CommentSchema, {
+    models['Comment'].hasMany(CommentSchema, {
         foreignKey: 'parentId',
         as: 'childComments'
     });
