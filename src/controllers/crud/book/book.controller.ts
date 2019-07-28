@@ -25,15 +25,13 @@ export class BookController extends CrudController<typeof bookService>{
     async update(params: any, option?: ICrudOption) {
         await this.validateJSON(params, BookSchema.UpdateBookSchema)
         const book = await this.service.model.findOne({ where: option.filter })
-        if (book.status === "pending") {
+        // Kiểm tra trạng thái của sách
+        // pending 
+        if (book.status === "pending" || book.status === "update_available") {
             delete params.status
             await ElasticSearchService.getInstance().update("book", book._id, book.toJSON())
             return await this.service.update(params, option)
-        } else if (book.status === "update_available") {
-            delete params.status
-            await ElasticSearchService.getInstance().update("book", book._id, book.toJSON())
-            return await this.service.update(params, option)
-        } else {
+        }  else {
             throw BookErrorService.bookBlocked()
         }
 
