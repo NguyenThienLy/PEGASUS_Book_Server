@@ -39,8 +39,8 @@ export class SearchController extends BaseController {
             case "book":
                 searchQuery = {
                     query: {
-                        match: {
-                            title: keyword,
+                        wildcard: {
+                            title: `*${keyword}*`,
                         }
                     },
                     "highlight": {
@@ -57,7 +57,7 @@ export class SearchController extends BaseController {
                         "query": {
                             "bool": {
                                 "must": [
-                                    { "match": { "title": keyword } },
+                                    { "wildcard": { title: `*${keyword}*` } },
                                     {
 
                                         "constant_score": {
@@ -78,8 +78,8 @@ export class SearchController extends BaseController {
             case "reviewer":
                 searchQuery = {
                     query: {
-                        match: {
-                            name: keyword,
+                        wildcard: {
+                            name: `*${keyword}*`,
                         }
                     },
                     "highlight": {
@@ -95,8 +95,8 @@ export class SearchController extends BaseController {
             case "post":
                 searchQuery = {
                     query: {
-                        match: {
-                            title: keyword,
+                        wildcard: {
+                            name: `*${keyword}*`,
                         }
                     },
                     "highlight": {
@@ -113,8 +113,8 @@ export class SearchController extends BaseController {
             case "author":
                 searchQuery = {
                     query: {
-                        match: {
-                            name: keyword,
+                        wildcard: {
+                            name: `*${keyword}*`,
                         }
                     },
                     "highlight": {
