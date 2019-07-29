@@ -9,7 +9,7 @@ export type MailRegisterModel = BaseModel & {
 const MailRegisterSchema = sequelize.define('tbl_mail_register',
     {
         _id: { type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4 },
-        email: { type: Sequelize.STRING, unique: true, validate: { isEmail: true, notEmpty: true }, allowNull: false},
+        email: { type: Sequelize.STRING, unique: "mail_register_email_index", validate: { isEmail: true, notEmpty: true }, allowNull: false},
         status: { type: Sequelize.STRING, defaultValue: "active" }
     },
     {

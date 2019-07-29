@@ -5,7 +5,7 @@ import { BaseModel } from './index'
 export type MailTemplateModel = BaseModel & {
     name: string
     content: string
-    type: "notification" | "new_post" | "news"
+    type: "notification" | "new_post" | "news" | "alert"
 }
 
 const MailTemplateSchema = sequelize.define('tbl_mail_template',
