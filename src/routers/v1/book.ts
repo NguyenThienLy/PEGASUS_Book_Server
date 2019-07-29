@@ -9,7 +9,7 @@ export default class BookRouter extends CrudRouter<typeof bookController> {
         super(bookController);
     }
     customRouter(){
-        this.router.get("/search", this.route(this.search))
+       // this.router.get("/search", this.route(this.search))
         this.router.get("/slug/:slug", [queryInfoMiddleware.run()],this.route(this.getItemBySlug))
     }
     async getItemBySlug(req: Request, res: Response){
@@ -17,10 +17,10 @@ export default class BookRouter extends CrudRouter<typeof bookController> {
         const result = await this.controller.getItem(req.queryInfo)
         this.onSuccess(res, result)
     }   
-    async search(req: Request, res: Response){
-        const result = await this.controller.search({ query: req.query.query })
-        this.onSuccess(res, result)
-    }
+    // async search(req: Request, res: Response){
+    //     const result = await this.controller.search({ query: req.query.query })
+    //     this.onSuccess(res, result)
+    // }
     deleteMiddlewares(): any[] {
         return [ blockMiddleware.run()]
     }

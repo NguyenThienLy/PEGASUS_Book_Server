@@ -41,7 +41,8 @@ export class CrudService<T extends Model> {
             }
             return result;
         } catch (err) {
-            throw err;
+            
+            throw errorService.database.query()
         }
     }
     async getList(option: ICrudOption = {
