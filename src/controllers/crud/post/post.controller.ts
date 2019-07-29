@@ -8,12 +8,14 @@ import { sequelize } from '../../../models';
 import { postReactionService } from '../../../services/crud/postReaction';
 import { ElasticSearchService } from '../../../services/elasticSearchService';
 import { userService } from '../../../services/crud/user';
+import { PostSchema } from './post.schema';
 
 export class PostController extends CrudController<typeof postService>{
     constructor() {
         super(postService);
     }
     async create(params: any, option?: ICrudOption) {
+        await this.validateJSON(params, PostSchema.CreatePostSchema)
         const post = await this.service.create(params, option)
         const user = await userService.getItem({ filter: { _id: post.userId }, fields: ["firstName", "lastName"] })
         try {
@@ -22,7 +24,7 @@ export class PostController extends CrudController<typeof postService>{
                 title: post.title,
                 description: post.description,
                 author: user.firstName + " " + user.lastName,
-                slug: post.slug, 
+                slug: post.slug,
                 thumb: post.thumb,
                 reaction: 0,
                 comment: 0
@@ -33,7 +35,7 @@ export class PostController extends CrudController<typeof postService>{
             throw err
         }
     }
-   
+
     async update(params: any, option?: ICrudOption) {
         let transaction = await sequelize.transaction()
         try {
