@@ -20,6 +20,7 @@
     "host": "ec2-54-235-167-210.compute-1.amazonaws.com",
     "dialect": "postgres",
     "ssl": true,
+    "logging":true,
     "dialectOptions": {
       "ssl": {
         "require": true
