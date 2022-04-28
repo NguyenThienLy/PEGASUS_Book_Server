@@ -20,7 +20,7 @@
     "ajv": "^5.3.0",
     "ajv-errors": "^1.0.0",
     "ajv-keywords": "^2.1.1",
-    "async": "~0.2.8",
+    "async": "~2.6.4",
     "babel-cli": "^6.26.0",
     "babel-plugin-root-import": "^5.1.0",
     "babel-preset-env": "^1.6.1",
